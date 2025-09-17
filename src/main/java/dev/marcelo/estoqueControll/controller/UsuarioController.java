@@ -2,6 +2,7 @@ package dev.marcelo.estoqueControll.controller;
 
 import dev.marcelo.estoqueControll.dto.LoginTokenDto;
 import dev.marcelo.estoqueControll.dto.UsuarioRegisterDto;
+import dev.marcelo.estoqueControll.dto.UsuarioUpdateSenhaDto;
 import dev.marcelo.estoqueControll.infra.exceptions.PasswordInvalidException;
 import dev.marcelo.estoqueControll.infra.exceptions.UsernameUniqueViolationException;
 import dev.marcelo.estoqueControll.infra.jwt.TokenService;
@@ -17,10 +18,9 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -62,5 +62,20 @@ public class UsuarioController {
         } catch (AuthenticationException e) {
             throw new PasswordInvalidException(e.getMessage());
         }
+    }
+    @GetMapping("/{id}")
+    public ResponseEntity<Usuario> findUsuario(@PathVariable Long id){
+        Usuario usuario = usuarioService.findById(id);
+        return ResponseEntity.ok().body(usuario);
+    }
+    @GetMapping()
+    public ResponseEntity<List<Usuario>> findAllUsuarios(){
+        List<Usuario> usuario = usuarioService.findAllUsuarios();
+        return ResponseEntity.ok().body(usuario);
+    }
+    @PatchMapping("/{id}")
+    public ResponseEntity<UsuarioUpdateSenhaDto> Update(@PathVariable Long id, @RequestBody UsuarioUpdateSenhaDto dto){
+        usuarioService.updateSenha(id,dto.senhaAtual(), dto.novaSenha());
+        return ResponseEntity.noContent().build();
     }
 }
