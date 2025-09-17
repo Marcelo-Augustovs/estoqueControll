@@ -4,10 +4,9 @@ import dev.marcelo.estoqueControll.model.Alimento;
 import dev.marcelo.estoqueControll.service.AlimentoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -20,5 +19,29 @@ public class AlimentoController {
     public ResponseEntity<Alimento> create(@RequestBody Alimento dto){
         alimentoService.save(dto);
         return ResponseEntity.status(201).body(dto);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Alimento> findAlimento(@PathVariable Long id){
+       Alimento alimentoSelecionado = alimentoService.findAlimento(id);
+       return ResponseEntity.ok().body(alimentoSelecionado);
+    }
+
+    @GetMapping()
+    public ResponseEntity<List<Alimento>> findAllAlimentos(){
+        List<Alimento> todosAlimentos = alimentoService.findAllAlimentos();
+        return ResponseEntity.ok().body(todosAlimentos);
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<Alimento> update(@PathVariable Long id, @RequestBody Alimento alimentoAtualizado){
+        Alimento alimento = alimentoService.updateAlimento(id,alimentoAtualizado);
+        return ResponseEntity.ok().body(alimento);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id){
+        alimentoService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }

@@ -2,10 +2,18 @@ package dev.marcelo.estoqueControll.model;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "alimento")
-@Getter
+@EntityListeners(AuditingEntityListener.class)
+@Getter @Setter
 public class Alimento {
 
     @Id
@@ -18,4 +26,16 @@ public class Alimento {
     private String tipoDoAlimento;
     @Column(name = "marca")
     private String marca;
+
+    @CreatedDate
+    @Column(name = "data_criacao")
+    private LocalDate dataCriacao;
+
+    @Column(name = "criado_por")
+    @CreatedBy
+    private String criadoPor;
+    @Column(name = "atualizado-por")
+    @LastModifiedBy
+    private String modificadoPor;
+
 }
