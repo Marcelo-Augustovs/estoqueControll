@@ -3,6 +3,8 @@ package dev.marcelo.estoqueControll.repository;
 import dev.marcelo.estoqueControll.model.Deposito;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface DepositoRepository extends JpaRepository<Deposito,Long> {
+import java.util.Optional;
 
+public interface DepositoRepository extends JpaRepository<Deposito,Long> {
+    Optional<Deposito> findByMesAndAno(int mes, int ano);
 }

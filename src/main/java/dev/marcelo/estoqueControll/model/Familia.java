@@ -9,8 +9,9 @@ public class Familia {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
-
     @Column(name = "nome")
     private String nome;
+    @Column(name = "endereco")
+    private String endereco;
 
 }
