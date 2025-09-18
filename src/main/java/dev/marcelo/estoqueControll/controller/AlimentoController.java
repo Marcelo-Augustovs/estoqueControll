@@ -2,6 +2,7 @@ package dev.marcelo.estoqueControll.controller;
 
 import dev.marcelo.estoqueControll.model.Alimento;
 import dev.marcelo.estoqueControll.service.AlimentoService;
+import dev.marcelo.estoqueControll.service.DepositoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,10 +15,12 @@ import java.util.List;
 public class AlimentoController {
 
     private final AlimentoService alimentoService;
+    private final DepositoService depositoService;
 
     @PostMapping
     public ResponseEntity<Alimento> create(@RequestBody Alimento dto){
-        alimentoService.save(dto);
+        Alimento alimento = alimentoService.save(dto);
+        depositoService.adicionarAlimento(alimento,alimento.getDataCriacao().getMonthValue(),alimento.getDataCriacao().getYear());
         return ResponseEntity.status(201).body(dto);
     }
 
