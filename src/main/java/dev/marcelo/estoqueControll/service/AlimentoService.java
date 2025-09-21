@@ -68,4 +68,10 @@ public class AlimentoService {
                 () -> new ApiNotFoundException("Alimento não encontrado")
         );
     }
+
+    @Transactional(readOnly = true)
+    public Alimento findByNome(String nomeDoAlimento) {
+        return alimentoRepository.findFirstByNome(nomeDoAlimento)
+                .orElseThrow(() -> new ApiNotFoundException("Alimento nao encontrado " + nomeDoAlimento));
+    }
 }

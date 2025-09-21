@@ -39,6 +39,7 @@ public class AlimentoController {
     @PatchMapping("/{id}")
     public ResponseEntity<Alimento> update(@PathVariable Long id, @RequestBody Alimento alimentoAtualizado){
         Alimento alimento = alimentoService.updateAlimento(id,alimentoAtualizado);
+        depositoService.atualizarAlimento(alimento,alimento.getDataCriacao().getMonthValue(),alimento.getDataCriacao().getYear());
         return ResponseEntity.ok().body(alimento);
     }
 

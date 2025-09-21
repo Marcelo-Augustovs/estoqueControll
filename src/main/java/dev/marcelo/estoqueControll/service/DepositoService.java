@@ -41,5 +41,11 @@ public class DepositoService {
                 });
     }
 
+    @Transactional
+    public void retirarAlimentos(Alimento alimento){
+        Deposito deposito = depositoRepository.findByMesAndAno(alimento.getDataCriacao().getMonthValue(),alimento.getDataCriacao().getYear())
+                .orElseThrow( () -> new ApiNotFoundException("Alimento nao encontrado no deposito"));
 
+       depositoRepository.delete(deposito);
+    }
 }
