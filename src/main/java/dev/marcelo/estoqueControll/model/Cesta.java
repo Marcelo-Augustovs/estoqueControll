@@ -1,5 +1,6 @@
 package dev.marcelo.estoqueControll.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,11 +29,12 @@ public class Cesta {
     private int quantidadeDeAlimentos;
 
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "alimentos")
+    @JoinColumn(name = "cesta_id")
     private List<Alimento> alimentos = new ArrayList<>();
 
     @ManyToOne
-    @JoinColumn
+    @JoinColumn(name = "familia_id")
+    @JsonIgnore
     private Familia familia;
 
     @CreatedDate

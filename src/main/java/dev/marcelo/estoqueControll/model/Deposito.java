@@ -27,7 +27,7 @@ public class Deposito {
     @Column(name = "ano")
     private int ano;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "deposito_id")
     private List<Alimento> alimentos = new ArrayList<>();
 

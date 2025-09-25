@@ -38,4 +38,16 @@ public class Alimento {
     @LastModifiedBy
     private String modificadoPor;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Alimento)) return false;
+        return id != null && id.equals(((Alimento) o).getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return 31;
+    }
+
 }
