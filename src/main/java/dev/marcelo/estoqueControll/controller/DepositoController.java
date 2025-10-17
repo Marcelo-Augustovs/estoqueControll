@@ -23,13 +23,8 @@ public class DepositoController {
 
     @PostMapping("/retirar")
     public ResponseEntity<Alimento> retirarAlimentoParaCesta(@RequestBody AdicionarAlimentoDto dto) {
-        // Busca o alimento no banco (gerenciado pelo JPA)
         Alimento alimento = alimentoService.findByNome(dto.nomeDoAlimento());
-
-        // Adiciona na cesta e persiste
         cestaService.adicionarAlimento(dto.idDaCesta(), alimento);
-
-        // Remove do depósito e persiste
         depositoService.retirarAlimento(alimento);
 
         return ResponseEntity.ok(alimento);

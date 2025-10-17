@@ -66,6 +66,7 @@ public class CestaService {
             Alimento alimento = alimentos.get(alimentos.size() - 1);
             depositoService.adicionarAlimento(alimento,alimento.getDataCriacao().getMonthValue(),alimento.getDataCriacao().getYear());
             alimentos.remove(alimento);
+            cesta.setQuantidadeDeAlimentos(cesta.getAlimentos().size());
         }
     }
 
@@ -73,7 +74,14 @@ public class CestaService {
     public CestaFamiliaDto entregarCesta(Cesta cesta, String nome){
         Familia familia = familiaService.findByNome(nome);
         familia.getCestasRecebidas().add(cesta);
+        familia.setCestaDoMesRecebido(true);
         CestaFamiliaDto cestaFamiliaDto = new CestaFamiliaDto(familia.getNome(), cesta.getId(), cesta.getDataCriacao().getMonthValue());
         return cestaFamiliaDto;
+    }
+
+    @Transactional(readOnly = true)
+    public List<Alimento> verificarAlimentos(Long id){
+      Cesta cesta = this.findCesta(id);
+      return  cesta.getAlimentos();
     }
 }

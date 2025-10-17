@@ -17,6 +17,7 @@ public class FamiliaService {
 
     @Transactional
     public Familia cadastrar(Familia familia){
+        familia.setCestaDoMesRecebido(false);
         return familiaRepository.save(familia);
     }
 

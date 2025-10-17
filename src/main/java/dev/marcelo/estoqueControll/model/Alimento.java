@@ -26,6 +26,8 @@ public class Alimento {
     private String tipoDoAlimento;
     @Column(name = "marca")
     private String marca;
+    @Column(name = "validade")
+    private String validade;
 
     @CreatedDate
     @Column(name = "data_criacao")

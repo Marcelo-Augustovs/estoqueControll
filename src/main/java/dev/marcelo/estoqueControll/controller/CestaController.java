@@ -57,4 +57,10 @@ public class CestaController {
         CestaFamiliaDto cestaRecebida = cestaService.entregarCesta(cestaDafamilia, dto.nomeDaFamilia());
         return ResponseEntity.ok().body(cestaRecebida);
     }
+
+    @GetMapping("/{id}/alimentos")
+    public ResponseEntity<List<Alimento>> getAlimentosDaCesta(@PathVariable Long id){
+        List<Alimento> alimentos = cestaService.verificarAlimentos(id);
+        return ResponseEntity.ok(alimentos);
+    }
 }

@@ -71,7 +71,7 @@ public class AlimentoService {
 
     @Transactional(readOnly = true)
     public Alimento findByNome(String nomeDoAlimento) {
-        return alimentoRepository.findFirstByNome(nomeDoAlimento)
+        return alimentoRepository.findFirstDisponivel(nomeDoAlimento)
                 .orElseThrow(() -> new ApiNotFoundException("Alimento nao encontrado " + nomeDoAlimento));
     }
 }
